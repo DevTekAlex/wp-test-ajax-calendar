@@ -1,0 +1,6 @@
+/.idea
+/wp-content/languages
+/wp-content/uploads/
+*.log
+/.htaccess
+wp-config.php
