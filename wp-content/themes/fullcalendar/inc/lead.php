@@ -112,34 +112,13 @@ function add_lead_from_form() {
         'post_type' => 'lead',
         'post_title' => sanitize_text_field($_POST['event_title'] . ' - ' . $_POST['first_name']),
         'post_status' => 'publish',
-    ));
-
-    global $wpdb;
-
-    if ($lead_id) {
-        $meta_values = array(
+        'meta_input' => array(
             'first_name' => sanitize_text_field($_POST['first_name']),
             'last_name' => sanitize_text_field($_POST['last_name']),
             'email' => sanitize_email($_POST['email']),
             'phone' => sanitize_text_field($_POST['phone'])
-        );
-
-        foreach ($meta_values as $key => $value) {
-            $wpdb->replace(
-                $wpdb->postmeta,
-                array(
-                    'post_id' => $lead_id,
-                    'meta_key' => $key,
-                    'meta_value' => $value
-                ),
-                array(
-                    '%d',
-                    '%s',
-                    '%s'
-                )
-            );
-        }
-    }
+        )
+    ));
 
     wp_send_json(array('success' => true, 'message' => 'Lead added successfully'));
 }
