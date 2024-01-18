@@ -108,17 +108,18 @@ add_action('manage_lead_posts_custom_column', 'lead_custom_columns', 10, 2);
 function add_lead_from_form() {
     check_ajax_referer('add_lead_nonce_action', 'add_lead_nonce');
 
-    $lead_id = wp_insert_post(array(
+    wp_insert_post([
         'post_type' => 'lead',
         'post_title' => sanitize_text_field($_POST['event_title'] . ' - ' . $_POST['first_name']),
         'post_status' => 'publish',
-        'meta_input' => array(
+        'meta_input' => [
             'first_name' => sanitize_text_field($_POST['first_name']),
             'last_name' => sanitize_text_field($_POST['last_name']),
             'email' => sanitize_email($_POST['email']),
             'phone' => sanitize_text_field($_POST['phone'])
-        )
-    ));
+        ]
+    ]);
+
 
     wp_send_json(array('success' => true, 'message' => 'Lead added successfully'));
 }
